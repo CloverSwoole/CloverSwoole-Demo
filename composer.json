@@ -1,0 +1,25 @@
+{
+  "name":"itxiao6/framework-demo",
+  "description":"基于PHP.Swoole 的组件式 框架 演示",
+  "keywords": ["framework","Swoole"],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1.0",
+    "itxiao6/framework":"dev-master"
+  },
+  "authors": [
+    {
+      "name": "itxiao6",
+      "email": "itxiao6@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Config\\":"config/",
+      "App\\":"app/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit" : "^5.6"
+  }
+}
