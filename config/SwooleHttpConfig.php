@@ -21,8 +21,8 @@ class SwooleHttpConfig implements ConfigInterface
             'host'=>'0.0.0.0',
             'server'=>[
                 'worker_num'=>50,
-                'daemonize'=>true,
-                'pid_file'=>'/Users/itxiao6/Desktop/object/Framework/Temp/http_swoole_pid.pid',
+                'daemonize'=>false,
+                'pid_file'=>__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Temp'.DIRECTORY_SEPARATOR.'swoole_http_pid.pid',
             ],
         ];
     }

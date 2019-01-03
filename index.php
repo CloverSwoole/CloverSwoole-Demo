@@ -51,8 +51,8 @@ $app -> bind(\Itxiao6\Framework\Facade\SwooleHttp\ServerEventInterface::class,\A
 /**
  * 启动swoole http
  */
-//$app -> make('swoole_http') -> boot($app);
+$app -> make('swoole_http') -> boot($app);
 /**
  * 启动swoole socket
  */
-$app -> make('swoole_socket') -> boot($app);
+//$app -> make('swoole_socket') -> boot($app);

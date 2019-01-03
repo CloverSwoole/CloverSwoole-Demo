@@ -22,7 +22,7 @@ class SwooleSocketConfig implements ConfigInterface
             'server'=>[
                 'worker_num'=>50,
                 'daemonize'=>false,
-                'pid_file'=>'/Users/itxiao6/Desktop/object/Framework/Temp/http_swoole_pid.pid',
+                'pid_file'=>__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Temp'.DIRECTORY_SEPARATOR.'http_swoole_pid.pid',
             ],
         ];
     }
