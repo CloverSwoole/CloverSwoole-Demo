@@ -1,6 +1,9 @@
 <?php
 namespace App\Event;
 
+use Illuminate\Container\Container;
+use Itxiao6\Framework\Facade\SwooleHttp\HttpServer;
+
 /**
  * 服务事件模型
  * Class SwooleHttpEvent
@@ -8,6 +11,21 @@ namespace App\Event;
  */
 class SwooleHttpEvent
 {
+    /**
+     * 服务容器
+     * @var null|Container
+     */
+    protected $container = null;
+
+    public function __construct(?Container $container = null)
+    {
+        /**
+         * 判断容器是否有效
+         */
+        if(!($container instanceof Container)){
+            $this -> container = $container;
+        }
+    }
     /**
      * 服务启动
      * @param \Swoole\Http\Server $server
@@ -25,7 +43,15 @@ class SwooleHttpEvent
      */
     public function onRequest(\swoole_http_request $request, \swoole_http_response $response)
     {
-        echo "onRequestEd\n";
+        /**
+         * 实例化WebServer
+         */
+        $http_service = new HttpServer($this -> container);
+        /**
+         * 请求到达
+         */
+        $http_service -> onRequest($request,$response);
+        return ;
     }
 
     /**
