@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controller;
-use Itxiao6\Framework\Facade\SwooleHttp\EasySwoole\Http\Controller;
+
+
+use Itxiao6\Framework\Facade\Http\Abstracts\Controller;
 
 /**
  *
@@ -12,23 +14,11 @@ class Index extends Controller
 
     function index()
     {
-        $res = \App\Models\Users::take(1) -> get();
-
+        $this -> response -> getRawResponse() -> header('Content-type','application/json;charset=utf-8');
+//        $this -> response -> endResponse();
+//        $res = \App\Models\Users::take(1) -> get();
+        $res = [1=>2];
         $this->ReturnJosn($res);
-    }
-
-    function actionNotFound($action): void
-    {
-        $this->response()->write("{$action} not found");
-    }
-    protected function onException(\Throwable $throwable): void
-    {
-        $this->response()->write($throwable->getMessage());
-    }
-
-    protected function gc()
-    {
-        parent::gc();
-//        var_dump('class :'.static::class.' is recycle to pool');
+//        $this -> response -> endResponse();
     }
 }

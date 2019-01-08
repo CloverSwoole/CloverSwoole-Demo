@@ -1,15 +1,15 @@
 <?php
 namespace App\Event;
-
 use Illuminate\Container\Container;
-use Itxiao6\Framework\Facade\SwooleHttp\HttpServer;
+use Itxiao6\Framework\Facade\SwooleHttp\HttpServerInterface;
+use Itxiao6\Framework\Facade\SwooleHttp\SwooleHttpInterface;
 
 /**
  * 服务事件模型
  * Class SwooleHttpEvent
  * @package Itxiao6\Framework\Facade\SwooleHttp
  */
-class SwooleHttpEvent
+class SwooleHttpEvent implements SwooleHttpInterface
 {
     /**
      * 服务容器
@@ -17,14 +17,21 @@ class SwooleHttpEvent
      */
     protected $container = null;
 
-    public function __construct(?Container $container = null)
+    /**
+     * 获取容器
+     * @param Container|null $container
+     * @return $this
+     */
+    public function boot(?Container $container = null)
     {
         /**
          * 判断容器是否有效
          */
         if(!($container instanceof Container)){
-            $this -> container = $container;
+            $container = new Container();
         }
+        $this -> container = $container;
+        return $this;
     }
     /**
      * 服务启动
@@ -46,12 +53,11 @@ class SwooleHttpEvent
         /**
          * 实例化WebServer
          */
-        $http_service = new HttpServer($this -> container);
+        $http_service = $this -> container -> make(HttpServerInterface::class) -> boot($this -> container);
         /**
          * 请求到达
          */
         $http_service -> onRequest($request,$response);
-        return ;
     }
 
     /**
