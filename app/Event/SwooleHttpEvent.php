@@ -50,14 +50,19 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onRequest(\swoole_http_request $request, \swoole_http_response $response)
     {
-        /**
-         * 实例化WebServer
-         */
-        $http_service = $this -> container -> make(HttpServerInterface::class) -> boot($this -> container);
-        /**
-         * 请求到达
-         */
-        $http_service -> onRequest($request,$response);
+        try{
+            /**
+             * 实例化WebServer
+             */
+            $http_service = $this -> container -> make(HttpServerInterface::class) -> boot($this -> container);
+            /**
+             * 请求到达
+             */
+            $http_service -> onRequest($request,$response);
+        }catch (\Throwable $exception){
+            // 异常处理 TODO
+            dump($exception);
+        }
     }
 
     /**
