@@ -3,6 +3,7 @@ namespace App\Event;
 use Illuminate\Container\Container;
 use Itxiao6\Framework\Facade\SwooleHttp\HttpServerInterface;
 use Itxiao6\Framework\Facade\SwooleHttp\SwooleHttpInterface;
+use Itxiao6\Framework\Facade\Whoops\WhoopsInterface;
 
 /**
  * 服务事件模型
@@ -60,8 +61,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
              */
             $http_service -> onRequest($request,$response);
         }catch (\Throwable $exception){
-            // 异常处理 TODO
-            dump($exception);
+            $this -> container -> make(WhoopsInterface::class) -> swooleOnRequestException($request,$response);
         }
     }
 
