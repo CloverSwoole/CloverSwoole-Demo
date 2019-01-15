@@ -12,8 +12,7 @@ class Index extends Controller
 
     function index()
     {
-//        $res = \App\Models\Users::take(1) -> get();
-        $res = [1=>2];
+        $res = \App\Models\Users::take(1) -> get();
         $this->ReturnJosn($res);
     }
 }
