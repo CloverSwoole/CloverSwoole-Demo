@@ -41,7 +41,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onStart(\Swoole\Http\Server $server)
     {
-        echo "onStarted\n";
+        echo "WebServerOnStarted\n";
     }
     /**
      * 消息到达
@@ -72,7 +72,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onShutdown(\Swoole\Http\Server $server)
     {
-        echo "onShutdownEd\n";
+        echo "WebServerOnShutdownEd\n";
     }
     /**
      * 服务关闭
@@ -82,7 +82,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onClose(\Swoole\Http\Server $server,$fd)
     {
-        echo "Server Closed\n";
+        echo "WebServer Closed\n";
     }
 
     /**
@@ -93,6 +93,6 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onOpen(\Swoole\Http\Server $server, \Swoole\Http\Server $request)
     {
-        echo "opOpened\n";
+        echo "WebServerOpOpened\n";
     }
 }
