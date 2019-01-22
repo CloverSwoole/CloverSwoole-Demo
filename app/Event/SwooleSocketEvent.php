@@ -1,9 +1,12 @@
 <?php
 namespace App\Event;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\Exception\Exception;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\ServerEventInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketFrame;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketServer;
+use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
+use Illuminate\Container\Container;
 
 /**
  * Swoole Socket 事件模型
@@ -12,6 +15,26 @@ use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketServer;
  */
 class SwooleSocketEvent implements ServerEventInterface
 {
+    /**
+     * @var null | Container
+     */
+    protected $container = null;
+    /**
+     * 获取容器
+     * @param Container|null $container
+     * @return $this
+     */
+    public function boot(?Container $container = null)
+    {
+        /**
+         * 判断容器是否有效
+         */
+        if(!($container instanceof Container)){
+            $container = new Container();
+        }
+        $this -> container = $container;
+        return $this;
+    }
     /**
      * 服务关闭
      * @param $server
@@ -118,13 +141,35 @@ class SwooleSocketEvent implements ServerEventInterface
 
     /**
      * 消息到达
-     * @param \swoole_http_request $request
-     * @param \swoole_http_response $response
+     * @param \swoole_http_request $request_raw
+     * @param \swoole_http_response $response_raw
      * @return mixed|void
      */
-    public function onRequest(\swoole_http_request $request, \swoole_http_response $response)
+    public function onRequest(\swoole_http_request $request_raw, \swoole_http_response $response_raw)
     {
-        echo "WebAndSocketOnRequestEd\n";
+        try{
+            /**
+             * 实例化WebServer
+             */
+            $http_service = $this -> container -> make(HttpServerInterface::class) -> boot($this -> container);
+            /**
+             * 请求到达
+             */
+            $http_service -> onRequest($request_raw,$response_raw);
+        }catch (\Throwable $exception){
+            /**
+             * 获取 request
+             */
+            $request = $this -> container -> make(\CloverSwoole\CloverSwoole\Facade\Http\Request::class) -> boot($request_raw);
+            /**
+             * 获取 response
+             */
+            $response = $this -> container -> make(\CloverSwoole\CloverSwoole\Facade\Http\Response::class) -> boot($response_raw);
+            /**
+             * 处理异常
+             */
+            $this -> container -> make(WhoopsInterface::class) -> swooleOnRequestException($exception,$request,$response);
+        }
     }
 
     /**
