@@ -2,6 +2,8 @@
 namespace App\Event;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\Exception\Exception;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\ServerEventInterface;
+use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketFrame;
+use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketServer;
 
 /**
  * Swoole Socket 事件模型
@@ -53,15 +55,23 @@ class SwooleSocketEvent implements ServerEventInterface
     {
         try{
             /**
+             * 设置全局访问服务
+             */
+            (new SocketServer()) -> boot($server) -> setAsGlobal(true);
+            /**
+             * 设置全局访问消息
+             */
+            (new SocketFrame()) -> boot($frame) -> setAsGlobal(true);
+            /**
              * 判断信息是否正确
              */
-            if(!($frame -> opcode == 1 && $frame -> finish == true && strlen($frame -> data) > 0)){
+            if(!(SocketFrame::getInterface() -> getOpcode() == 1 && SocketFrame::getInterface() -> getFinish() == true && strlen(SocketFrame::getInterface() -> getData()) > 0)){
                 throw new Exception('数据非法');
             }
             /**
              * 格式化数据
              */
-            $data = json_decode($frame -> data,1);
+            $data = json_decode(SocketFrame::getInterface() -> getData(),1);
             /**
              * 应用名过滤
              */
@@ -96,8 +106,9 @@ class SwooleSocketEvent implements ServerEventInterface
             /**
              * 实例化控制器
              */
-            (new $class($server,$frame)) -> __hook($data['action']);
+            (new $class(SocketServer::getInterface(),SocketFrame::getInterface())) -> __hook($data['action']);
         }catch (\Throwable $exception){
+            dump($exception);
             /**
              * 处理异常
              */
