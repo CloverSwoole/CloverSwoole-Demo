@@ -5,7 +5,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.1.0",
-    "itxiao6/framework":"dev-master"
+    "clover-swoole/clover-swoole":"dev-master"
   },
   "authors": [
     {
