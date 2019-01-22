@@ -1,6 +1,6 @@
 <?php
 namespace App\Event;
-use Itxiao6\Framework\Facade\SwooleSocket\ServerEventInterface;
+use CloverSwoole\CloverSwoole\Facade\SwooleSocket\ServerEventInterface;
 
 /**
  * Swoole Socket 事件模型

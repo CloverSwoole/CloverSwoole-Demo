@@ -1,7 +1,10 @@
 <?php
 namespace App\Http\Controller;
 use App\Models\Users;
-use Itxiao6\Framework\Facade\Http\Abstracts\Controller;
+use CloverSwoole\CloverSwoole\Facade\Http\Abstracts\Controller;
+use CloverSwoole\CloverSwoole\Facade\Http\Request;
+use CloverSwoole\CloverSwoole\Facade\Http\Response;
+
 /**
  *
  * Class Index
@@ -12,11 +15,28 @@ class Index extends Controller
 
     function index()
     {
+        $this -> returnJosn(['name'=>'戒尺','age'=>20,'sex'=>'男']);
+    }
+    function dump()
+    {
+        Response::dump(Request::getInterface() -> getGetParam() -> getGets());
+    }
+    function test_login()
+    {
         try{
             Users::login($this -> __getRequest() -> getPostParam() -> getPost('username'),$this -> __getRequest() -> getPostParam() -> getPost('password'));
             $this -> returnJosn(['status'=>200,'msg'=>'登录成功']);
         }catch (\Throwable $throwable){
             $this -> returnJosn(['status'=>400,'msg'=>$throwable -> getMessage()]);
         }
+    }
+    public function db_test()
+    {
+        Users::where('id','!=',1) -> get();
+    }
+    function route()
+    {
+        $url = $this -> route -> getRequest() -> getRawRequest() -> server['path_info'];
+        Response::dump($url);
     }
 }

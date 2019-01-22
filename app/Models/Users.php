@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
-use Itxiao6\Framework\Facade\Databases\Model;
-
+use CloverSwoole\CloverSwoole\Facade\Databases\Model;
 /**
  * 用户模型
  * Class Users
@@ -9,5 +8,9 @@ use Itxiao6\Framework\Facade\Databases\Model;
  */
 class Users extends Model
 {
-    protected $table = "users";
+    protected $table = "api_request_log";
+    public static function login($username,$password)
+    {
+        return true;
+    }
 }

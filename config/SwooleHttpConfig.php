@@ -1,7 +1,7 @@
 <?php
 namespace Config;
 use Illuminate\Container\Container;
-use Itxiao6\Framework\Facade\SwooleHttp\ConfigInterface;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ConfigInterface;
 
 /**
  * Swoole Http 配置

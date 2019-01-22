@@ -5,7 +5,7 @@ namespace Config;
  * Class Datbases
  * @package Config
  */
-class Databases implements \Itxiao6\Framework\Facade\Databases\ConfigInterface
+class Databases implements \CloverSwoole\CloverSwoole\Facade\Databases\ConfigInterface
 {
     public function boot(?\Illuminate\Container\Container $container = null)
     {
@@ -15,7 +15,7 @@ class Databases implements \Itxiao6\Framework\Facade\Databases\ConfigInterface
         $container['config']['database'] = [
             'driver'=>'mysql',
             'host'=>'127.0.0.1',
-            'database'=>'test',
+            'database'=>'open_api',
             'username'=>'root',
             'password'=>'123456',
             'charset'=>'utf8',

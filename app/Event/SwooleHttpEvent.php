@@ -1,14 +1,14 @@
 <?php
 namespace App\Event;
 use Illuminate\Container\Container;
-use Itxiao6\Framework\Facade\SwooleHttp\HttpServerInterface;
-use Itxiao6\Framework\Facade\SwooleHttp\SwooleHttpInterface;
-use Itxiao6\Framework\Facade\Whoops\WhoopsInterface;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\SwooleHttpInterface;
+use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
 
 /**
  * 服务事件模型
  * Class SwooleHttpEvent
- * @package Itxiao6\Framework\Facade\SwooleHttp
+ * @package CloverSwoole\CloverSwoole\Facade\SwooleHttp
  */
 class SwooleHttpEvent implements SwooleHttpInterface
 {
@@ -64,11 +64,11 @@ class SwooleHttpEvent implements SwooleHttpInterface
             /**
              * 获取 request
              */
-            $request = $this -> container -> make(\Itxiao6\Framework\Facade\Http\Request::class) -> boot($request_raw);
+            $request = $this -> container -> make(\CloverSwoole\CloverSwoole\Facade\Http\Request::class) -> boot($request_raw);
             /**
              * 获取 response
              */
-            $response = $this -> container -> make(\Itxiao6\Framework\Facade\Http\Response::class) -> boot($response_raw);
+            $response = $this -> container -> make(\CloverSwoole\CloverSwoole\Facade\Http\Response::class) -> boot($response_raw);
             /**
              * 处理异常
              */
