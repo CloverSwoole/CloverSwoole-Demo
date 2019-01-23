@@ -11,10 +11,10 @@ class Databases implements \CloverSwoole\CloverSwoole\Facade\Databases\ConfigInt
     {
         \CloverSwoole\CloverSwoole\Framework::getContainerInterface()['config']['database'] = [
             'driver'=>'mysql',
-            'host'=>'127.0.0.1',
-            'database'=>'open_api',
-            'username'=>'root',
-            'password'=>'123456',
+            'host'=>env('db_host','localhost'),
+            'database'=>env('db_name','test'),
+            'username'=>env('db_user','root'),
+            'password'=>env('db_pass','123456'),
             'charset'=>'utf8',
             'collation'=>'utf8_general_ci',
             'prefix'=>''
