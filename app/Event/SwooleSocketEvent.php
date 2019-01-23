@@ -1,10 +1,11 @@
 <?php
 namespace App\Event;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManage;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManageInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\Exception\Exception;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\ServerEventInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketFrame;
-use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketServer;
 use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
 use Illuminate\Container\Container;
 
@@ -62,6 +63,10 @@ class SwooleSocketEvent implements ServerEventInterface
     public function onOpen(\swoole_websocket_server $server, \swoole_http_request $request)
     {
         try{
+            /**
+             * 获取全局Server 实例
+             */
+            $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
             echo "连接到达\n";
         }catch (\Throwable $exception){
             echo "异常:{$exception -> getMessage()}\n";
@@ -78,9 +83,9 @@ class SwooleSocketEvent implements ServerEventInterface
     {
         try{
             /**
-             * 设置全局访问服务
+             * 获取全局Server 实例
              */
-            (new SocketServer()) -> boot($server) -> setAsGlobal(true);
+            $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
             /**
              * 设置全局访问消息
              */
@@ -129,7 +134,7 @@ class SwooleSocketEvent implements ServerEventInterface
             /**
              * 实例化控制器
              */
-            (new $class(SocketServer::getInterface(),SocketFrame::getInterface())) -> __hook($data['action']);
+            (new $class(ServerManage::getInterface(),SocketFrame::getInterface())) -> __hook($data['action']);
         }catch (\Throwable $exception){
             dump($exception);
             /**
@@ -143,11 +148,16 @@ class SwooleSocketEvent implements ServerEventInterface
      * 消息到达
      * @param \swoole_http_request $request_raw
      * @param \swoole_http_response $response_raw
+     * @param \swoole_websocket_server $server
      * @return mixed|void
      */
-    public function onRequest(\swoole_http_request $request_raw, \swoole_http_response $response_raw)
+    public function onRequest(\swoole_http_request $request_raw, \swoole_http_response $response_raw,\swoole_websocket_server $server)
     {
         try{
+            /**
+             * 获取全局Server 实例
+             */
+            $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
             /**
              * 实例化WebServer
              */
@@ -179,6 +189,10 @@ class SwooleSocketEvent implements ServerEventInterface
      */
     public function onShutdown(\swoole_websocket_server $server)
     {
+        /**
+         * 获取全局Server 实例
+         */
+        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebAndSocketOnShutdownEd\n";
     }
 
@@ -189,6 +203,10 @@ class SwooleSocketEvent implements ServerEventInterface
      */
     public function onStart(\swoole_websocket_server $server)
     {
+        /**
+         * 获取全局Server 实例
+         */
+        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebAndSocketOnStarted\n";
     }
 }
