@@ -7,7 +7,6 @@ use CloverSwoole\CloverSwoole\Facade\SwooleSocket\Exception\Exception;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\ServerEventInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketFrame;
 use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
-use Illuminate\Container\Container;
 
 /**
  * Swoole Socket 事件模型

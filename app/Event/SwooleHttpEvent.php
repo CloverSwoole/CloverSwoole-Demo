@@ -1,7 +1,6 @@
 <?php
 namespace App\Event;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManageInterface;
-use Illuminate\Container\Container;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\SwooleHttpInterface;
 use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
