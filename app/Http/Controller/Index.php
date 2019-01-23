@@ -4,6 +4,7 @@ use App\Models\Users;
 use CloverSwoole\CloverSwoole\Facade\Http\Abstracts\Controller;
 use CloverSwoole\CloverSwoole\Facade\Http\Request;
 use CloverSwoole\CloverSwoole\Facade\Http\Response;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManage;
 
 /**
  *
@@ -33,6 +34,10 @@ class Index extends Controller
     public function db_test()
     {
         $this -> returnJosn(Users::where('id','!=',1) -> get());
+    }
+    public function server_debug()
+    {
+        Response::dump(ServerManage::getInterface() -> getRawServer());
     }
     function route()
     {
