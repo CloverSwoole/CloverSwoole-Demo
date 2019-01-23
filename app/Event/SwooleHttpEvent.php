@@ -1,5 +1,6 @@
 <?php
 namespace App\Event;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManageInterface;
 use Illuminate\Container\Container;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\SwooleHttpInterface;
@@ -42,16 +43,25 @@ class SwooleHttpEvent implements SwooleHttpInterface
     public function onStart(\Swoole\Http\Server $server)
     {
         echo "WebServerOnStarted\n";
+        /**
+         * 获取全局Server 实例
+         */
+        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
     }
 
     /**
      * 请求到达事件
      * @param \swoole_http_request $request_raw
      * @param \swoole_http_response $response_raw
+     * @param \swoole_http_server $server
      */
-    public function onRequest(\swoole_http_request $request_raw, \swoole_http_response $response_raw)
+    public function onRequest(\swoole_http_request $request_raw, \swoole_http_response $response_raw,\swoole_http_server $server)
     {
         try{
+            /**
+             * 获取全局Server 实例
+             */
+            $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
             /**
              * 实例化WebServer
              */
@@ -83,6 +93,10 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onShutdown(\Swoole\Http\Server $server)
     {
+        /**
+         * 获取全局Server 实例
+         */
+        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebServerOnShutdownEd\n";
     }
     /**
@@ -93,6 +107,10 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onClose(\Swoole\Http\Server $server,$fd)
     {
+        /**
+         * 获取全局Server 实例
+         */
+        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebServer Closed\n";
     }
 
@@ -104,6 +122,10 @@ class SwooleHttpEvent implements SwooleHttpInterface
      */
     public function onOpen(\Swoole\Http\Server $server, \Swoole\Http\Server $request)
     {
+        /**
+         * 获取全局Server 实例
+         */
+        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebServerOpOpened\n";
     }
 }
