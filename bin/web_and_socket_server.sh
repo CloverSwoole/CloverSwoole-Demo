@@ -1,8 +1,7 @@
+#!/usr/bin/env php
 <?php
-include './vendor/autoload.php';
-
+include __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 use CloverSwoole\CloverSwoole\Bootstrap;
-
 /**
  * 获取框架实例
  */
@@ -49,10 +48,6 @@ $app -> bind(\CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerEventInterface::
  */
 
 /**
- * 启动swoole http
- */
-$app -> make('swoole_http') -> boot($app);
-/**
  * 启动swoole socket
  */
-//$app -> make('swoole_socket') -> boot($app);
+$app -> make('swoole_socket') -> boot($app);
