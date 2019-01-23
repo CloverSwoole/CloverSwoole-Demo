@@ -32,7 +32,7 @@ class Index extends Controller
     }
     public function db_test()
     {
-        Users::where('id','!=',1) -> get();
+        $this -> returnJosn(Users::where('id','!=',1) -> get());
     }
     function route()
     {
