@@ -13,26 +13,13 @@ use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
  */
 class SwooleHttpEvent implements SwooleHttpInterface
 {
-    /**
-     * 服务容器
-     * @var null|Container
-     */
-    protected $container = null;
 
     /**
      * 获取容器
-     * @param Container|null $container
      * @return $this
      */
-    public function boot(?Container $container = null)
+    public function boot()
     {
-        /**
-         * 判断容器是否有效
-         */
-        if(!($container instanceof Container)){
-            $container = new Container();
-        }
-        $this -> container = $container;
         return $this;
     }
     /**
@@ -46,7 +33,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
         /**
          * 获取全局Server 实例
          */
-        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
+        \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
     }
 
     /**
@@ -61,11 +48,11 @@ class SwooleHttpEvent implements SwooleHttpInterface
             /**
              * 获取全局Server 实例
              */
-            $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
+            \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
             /**
              * 实例化WebServer
              */
-            $http_service = $this -> container -> make(HttpServerInterface::class) -> boot($this -> container);
+            $http_service = \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(HttpServerInterface::class) -> boot();
             /**
              * 请求到达
              */
@@ -74,15 +61,15 @@ class SwooleHttpEvent implements SwooleHttpInterface
             /**
              * 获取 request
              */
-            $request = $this -> container -> make(\CloverSwoole\CloverSwoole\Facade\Http\Request::class) -> boot($request_raw);
+            $request = \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(\CloverSwoole\CloverSwoole\Facade\Http\Request::class) -> boot($request_raw);
             /**
              * 获取 response
              */
-            $response = $this -> container -> make(\CloverSwoole\CloverSwoole\Facade\Http\Response::class) -> boot($response_raw);
+            $response = \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(\CloverSwoole\CloverSwoole\Facade\Http\Response::class) -> boot($response_raw);
             /**
              * 处理异常
              */
-            $this -> container -> make(WhoopsInterface::class) -> swooleOnRequestException($exception,$request,$response);
+            \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(WhoopsInterface::class) -> swooleOnRequestException($exception,$request,$response);
         }
     }
 
@@ -96,7 +83,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
         /**
          * 获取全局Server 实例
          */
-        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
+        \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebServerOnShutdownEd\n";
     }
     /**
@@ -110,7 +97,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
         /**
          * 获取全局Server 实例
          */
-        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
+        \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebServer Closed\n";
     }
 
@@ -125,7 +112,7 @@ class SwooleHttpEvent implements SwooleHttpInterface
         /**
          * 获取全局Server 实例
          */
-        $this -> container -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
+        \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
         echo "WebServerOpOpened\n";
     }
 }

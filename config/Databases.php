@@ -7,12 +7,9 @@ namespace Config;
  */
 class Databases implements \CloverSwoole\CloverSwoole\Facade\Databases\ConfigInterface
 {
-    public function boot(?\Illuminate\Container\Container $container = null)
+    public function boot()
     {
-        if(!($container instanceof \Illuminate\Container\Container)){
-            $container = new \Illuminate\Container\Container();
-        }
-        $container['config']['database'] = [
+        \CloverSwoole\CloverSwoole\Framework::getContainerInterface()['config']['database'] = [
             'driver'=>'mysql',
             'host'=>'127.0.0.1',
             'database'=>'open_api',

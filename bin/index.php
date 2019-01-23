@@ -1,6 +1,21 @@
-#!/usr/bin/env php
 <?php
 include __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+
+//\CloverSwoole\CloverSwoole\Facade\Hook\Hook::getInterface('default') -> add_ordinary('onRequest',function($name,$age){
+//    echo "strat\n";
+//    echo "name:{$name},age:{$age}\n";
+//    echo "end\n";
+//});
+//\CloverSwoole\CloverSwoole\Facade\Hook\Hook::getInterface('default') -> add_coroutine('onRequest',function($name,$age){
+//    echo "strat\n";
+//    co::sleep(3);
+//    echo "name:{$name},age:{$age}\n";
+//    echo "end\n";
+//});
+//\CloverSwoole\CloverSwoole\Facade\Hook\Hook::getInterface('default')->listen('onRequest',['戒尺',18]);
+//echo "结束响应\n";
+//
+//exit();
 use CloverSwoole\CloverSwoole\Bootstrap;
 
 /**
@@ -48,6 +63,10 @@ use CloverSwoole\CloverSwoole\Bootstrap;
  * <=================== 启动组件 =====================>
  */
 
+/**
+ * 启动swoole http
+ */
+//\CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make('swoole_http') -> boot();
 /**
  * 启动swoole socket
  */

@@ -11,12 +11,12 @@ use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ConfigInterface;
 class SwooleSocketConfig implements ConfigInterface
 {
 
-    public function boot(?Container $container = null)
+    /**
+     * @return mixed|void
+     */
+    public function boot()
     {
-        if(!($container instanceof Container)){
-            $container = new Container();
-        }
-        $container['config']['swoole_socket'] = [
+        \CloverSwoole\CloverSwoole\Framework::getContainerInterface()['config']['swoole_socket'] = [
             'port'=>5200,
             'host'=>'0.0.0.0',
             'server'=>[
