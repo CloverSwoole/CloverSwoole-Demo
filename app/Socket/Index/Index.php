@@ -1,6 +1,7 @@
 <?php
 namespace App\Socket\Index;
 use CloverSwoole\CloverSwoole\Facade\Socket\Abstracts\SocketController;
+use CloverSwoole\CloverSwoole\Facade\SwooleSocket\SocketFrame;
 
 /**
  * Class Index
@@ -10,6 +11,6 @@ class Index extends SocketController
 {
     public function index()
     {
-        $this -> returnJosn(['status'=>1,'name'=>'戒尺']);
+        $this -> returnJosn(SocketFrame::getInterface() ->getData());
     }
 }
