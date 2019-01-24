@@ -6,8 +6,6 @@ use CloverSwoole\CloverSwoole\Facade\Http\Abstracts\Controller;
 use CloverSwoole\CloverSwoole\Facade\Http\Request;
 use CloverSwoole\CloverSwoole\Facade\Http\Response;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManage;
-use Illuminate\Container\Container;
-
 /**
  *
  * Class Index
@@ -20,7 +18,7 @@ class Index extends Controller
      */
     function index()
     {
-        $phone = '15538147923';
+        $phone = '1233123';
         $code = '12342';
         // 协程任务
         Hook::getInterface() -> add_coroutine('response_end',function()use($code,$phone){
