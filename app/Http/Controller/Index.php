@@ -13,6 +13,10 @@ use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManage;
  */
 class Index extends Controller
 {
+    function echo_test()
+    {
+        echo "this is test";
+    }
     /**
      * JSON 数据返回
      */
