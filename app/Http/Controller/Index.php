@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controller;
 use App\Models\Users;
+use CloverSwoole\CloverSwoole\Facade\Hook\Hook;
 use CloverSwoole\CloverSwoole\Facade\Http\Abstracts\Controller;
 use CloverSwoole\CloverSwoole\Facade\Http\Request;
 use CloverSwoole\CloverSwoole\Facade\Http\Response;
@@ -19,6 +20,29 @@ class Index extends Controller
      */
     function index()
     {
+        $phone = '15538147923';
+        $code = '12342';
+        // 协程任务
+        Hook::getInterface() -> add_coroutine('response_end',function()use($code,$phone){
+            \co::sleep(5);
+            echo "发送成功,手机号:{$phone},code:{$code}\n";
+        });
+        $mail = 'itxiao6@qq.com';
+        // 普通任务
+        Hook::getInterface() -> add_ordinary('response_end',function()use($code,$mail){
+            \co::sleep(5);
+            echo "发送成功,邮箱:{$mail},code:{$code}\n";
+        });
+        // 异步任务
+        Hook::getInterface() -> add_async('response_end',function()use($code,$mail){
+            /**
+             * 建议内部使用协程
+             */
+            \go(function()use($mail,$code){
+                \co::sleep(5);
+                echo "发送成功,:邮箱:{$mail},code:{$code}\n";
+            });
+        });
         $this -> returnJosn(['name'=>'戒尺','age'=>20,'sex'=>'男']);
     }
 
