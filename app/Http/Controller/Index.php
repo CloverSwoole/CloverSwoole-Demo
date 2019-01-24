@@ -13,6 +13,9 @@ use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManage;
  */
 class Index extends Controller
 {
+    /**
+     * 缓冲区演示
+     */
     function echo_test()
     {
         echo "this is test";
