@@ -1,6 +1,7 @@
 <?php
 namespace App\Event;
 use CloverSwoole\CloverSwoole\Facade\SuperClosure\SuperClosure;
+use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerEvent;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManageInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\SwooleHttpInterface;
@@ -11,7 +12,7 @@ use CloverSwoole\CloverSwoole\Facade\Whoops\WhoopsInterface;
  * Class SwooleHttpEvent
  * @package CloverSwoole\CloverSwoole\Facade\SwooleHttp
  */
-class SwooleHttpEvent implements SwooleHttpInterface
+class SwooleHttpEvent extends ServerEvent implements SwooleHttpInterface
 {
 
     /**
