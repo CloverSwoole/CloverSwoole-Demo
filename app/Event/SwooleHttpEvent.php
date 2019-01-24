@@ -1,5 +1,6 @@
 <?php
 namespace App\Event;
+use CloverSwoole\CloverSwoole\Facade\SuperClosure\SuperClosure;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManageInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\HttpServerInterface;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\SwooleHttpInterface;
@@ -33,6 +34,20 @@ class SwooleHttpEvent implements SwooleHttpInterface
          * 获取全局Server 实例
          */
         \CloverSwoole\CloverSwoole\Framework::getContainerInterface() -> make(ServerManageInterface::class) -> boot($server) -> setAsGlobal(true);
+    }
+    public function onTask(\swoole_http_server $server, int $taskId, int $fromWorkerId,$data)
+    {
+        if($data instanceof SuperClosure){
+            try{
+                return $data($server,$taskId,$fromWorkerId);
+            }catch (\Throwable $throwable){
+                dump($throwable);
+            }
+        }
+    }
+    public function onFinish(\swoole_http_server $serv, int $task_id, string $data)
+    {
+        dump($data);
     }
 
     /**
