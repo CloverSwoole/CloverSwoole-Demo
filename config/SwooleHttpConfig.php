@@ -18,6 +18,7 @@ class SwooleHttpConfig implements ConfigInterface
             'host'=>'0.0.0.0',
             'server'=>[
                 'worker_num'=>32,
+                'task_worker_num'=>8,
                 'daemonize'=>false,
                 'max_request'=>50,
                 'pid_file'=>__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Temp'.DIRECTORY_SEPARATOR.'swoole_http_pid.pid',

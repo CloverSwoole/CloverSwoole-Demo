@@ -21,6 +21,7 @@ class SwooleSocketConfig implements ConfigInterface
             'host'=>'0.0.0.0',
             'server'=>[
                 'worker_num'=>50,
+                'task_worker_num'=>8,
                 'daemonize'=>false,
                 'pid_file'=>__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Temp'.DIRECTORY_SEPARATOR.'http_swoole_pid.pid',
             ],
