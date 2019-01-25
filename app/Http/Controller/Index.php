@@ -6,6 +6,8 @@ use CloverSwoole\CloverSwoole\Facade\Http\Abstracts\Controller;
 use CloverSwoole\CloverSwoole\Facade\Http\Request;
 use CloverSwoole\CloverSwoole\Facade\Http\Response;
 use CloverSwoole\CloverSwoole\Facade\SwooleHttp\ServerManage;
+use CloverSwoole\CloverSwoole\Facade\Timer\Timer;
+
 /**
  *
  * Class Index
@@ -19,6 +21,25 @@ class Index extends Controller
     function echo_test()
     {
         echo "this is test";
+    }
+
+    /**
+     * 创建定时器
+     */
+    function create_timer()
+    {
+        $timer_id = Timer::loop(2000,function(){
+            echo "定时器:".date('Y-m-d H:i:s')."\n";
+        });
+        echo "response is end,timer_id:{$timer_id}";
+    }
+
+    /**
+     * 清除定时器
+     */
+    function clear_timer()
+    {
+        Timer::clear(Request::getInterface() -> getGetParam() -> getGet('id'));
     }
     /**
      * JSON 数据返回
